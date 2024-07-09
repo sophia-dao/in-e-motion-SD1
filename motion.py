@@ -1,6 +1,7 @@
 import cv2
 import mediapipe as mp
 import numpy as np
+from screeninfo import get_monitors
 
 def list_available_cameras(max_cameras=10):
     available_cameras = []
@@ -27,8 +28,12 @@ def select_capture_methods():
             if 1 <= choice <= len(available_cameras):
                 cap = cv2.VideoCapture(available_cameras[choice - 1])
                                                         # Set capture resolution:
-                cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)  # Adjust width
-                cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480) # Adjust height
+                # Get the screen resolution
+                screen = get_monitors()[0]
+                screen_width = screen.width
+                screen_height = screen.height
+                cap.set(cv2.CAP_PROP_FRAME_WIDTH, screen_width)  # Adjust width
+                cap.set(cv2.CAP_PROP_FRAME_HEIGHT, screen_height) # Adjust height
                 captures.append(cap)
             elif choice == len(available_cameras) + 1:
                 video_file_path = input("Enter the path to the video file: ")
