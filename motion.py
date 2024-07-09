@@ -27,8 +27,8 @@ def select_capture_methods():
             if 1 <= choice <= len(available_cameras):
                 cap = cv2.VideoCapture(available_cameras[choice - 1])
                                                         # Set capture resolution:
-                cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)  # Adjust width
-                cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480) # Adjust height
+                cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)  # Adjust width
+                cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1280) # Adjust height
                 captures.append(cap)
             elif choice == len(available_cameras) + 1:
                 video_file_path = input("Enter the path to the video file: ")
@@ -75,7 +75,7 @@ while True:
 
     for idx, frame in enumerate(frames):
         # Prepare the frame for person detection
-        blob = cv2.dnn.blobFromImage(frame, 0.007843, (300, 300), 127.5)
+        blob = cv2.dnn.blobFromImage(frame, 0.007843, (568, 320), 100)
         net.setInput(blob)
         detections = net.forward()
 
@@ -110,7 +110,7 @@ while True:
                             new_head_count += 1
 
         # Resize the frame for display
-        resized_frame = cv2.resize(frame, (500, 500))  # Adjust width and height as needed
+        resized_frame = cv2.resize(frame, (1920,1080))  # Adjust width and height as needed
 
         # Display the resulting frame in a unique window
         cv2.imshow(f'Multi-Person Pose Estimation - Camera {idx + 1}', resized_frame)
